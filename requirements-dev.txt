@@ -18,8 +18,12 @@ identify==2.5.31
     # via pre-commit
 iniconfig==2.0.0
     # via pytest
+mypy==1.6.1
+    # via -r requirements-dev.in
 mypy-extensions==1.0.0
-    # via black
+    # via
+    #   black
+    #   mypy
 nodeenv==1.8.0
     # via pre-commit
 packaging==23.2
@@ -42,6 +46,8 @@ pyyaml==6.0.1
     # via pre-commit
 ruff==0.1.4
     # via -r requirements-dev.in
+typing-extensions==4.8.0
+    # via mypy
 virtualenv==20.24.6
     # via pre-commit
 
