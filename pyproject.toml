@@ -3,9 +3,6 @@ python_version = 3.12
 strict = true
 pretty = true
 
-[[tool.mypy.overrides]]
-directories = "tests"  # Allow untyped tests.
-
 [tool.black]
 line-length = 88
 target-version = ['py312']
