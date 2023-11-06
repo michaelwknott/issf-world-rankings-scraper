@@ -1,0 +1,101 @@
+[tool.mypy]
+python_version = 3.11
+strict = true
+pretty = true
+
+[[tool.mypy.overrides]]
+directories = "tests"  # Allow untyped tests.
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.ruff]
+# Assume Python 3.11.
+target-version = "py311"
+
+select = [
+    "E",     # pycodestyle
+    "F",     # Pyflakes
+    "W",     # pycodestyle warnings
+    "C901",  # McCabe complexity
+    "N",     # pep8-naming
+    "D",     # pydocstyle
+    "UP",    # pyupgrade
+    "PL"     # pylint
+]
+
+ignore = ["D100", "D104"]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+per-file-ignores = {}
+
+# Same as Black.
+line-length = 88
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.extend-per-file-ignores]
+"test_*.py" = [
+    "D101",  # Missing docstring in public class
+    "D102",  # Missing docstring in public method
+    "D103",  # Missing docstring in public function
+]
+"conftest.py" = [
+    "D101",  # Missing docstring in public class
+    "D102",  # Missing docstring in public method
+    "D103",  # Missing docstring in public function
+]
+
+[tool.ruff.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds 10.
+max-complexity = 10
+
+[tool.ruff.pydocstyle]
+# Use Google-style docstrings.
+convention = "google"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+
+# Placeholders for future configuration if required.
+[tool.ruff.isort]
+
+[tool.ruff.pep8-naming]
+
+[tool.ruff.pylint]
+
+[tool.ruff.pyupgrade]
