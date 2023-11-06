@@ -1,5 +1,5 @@
 [tool.mypy]
-python_version = 3.11
+python_version = 3.12
 strict = true
 pretty = true
 
@@ -8,11 +8,11 @@ directories = "tests"  # Allow untyped tests.
 
 [tool.black]
 line-length = 88
-target-version = ['py311']
+target-version = ['py312']
 
 [tool.ruff]
-# Assume Python 3.11.
-target-version = "py311"
+# Assume Python 3.12.
+target-version = "py312"
 
 select = [
     "E",     # pycodestyle
