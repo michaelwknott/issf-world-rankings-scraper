@@ -21,17 +21,6 @@ EVENT_CODES = [
     "SKW",
 ]
 
-DICT_WRITER_FIELDNAMES = [
-    "event",
-    "rank",
-    "rating",
-    "name",
-    "nation",
-    "year_of_birth",
-    "date",
-    "version_date",
-]
-
 
 def get_issf_ranking_html(event):
     """Get and return html content of ISSF world rankings page for a given event.
