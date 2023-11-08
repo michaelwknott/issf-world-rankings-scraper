@@ -28,6 +28,6 @@ class Rankings(Base):
     rating = mapped_column(Integer)
     name = mapped_column(String(50))
     nation = mapped_column(String)
-    year_of_birth = mapped_column(Integer)
+    year_of_birth = mapped_column(Date)
     date = mapped_column(Date)
     version_date = mapped_column(Date)
