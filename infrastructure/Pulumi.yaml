@@ -1,0 +1,3 @@
+name: issf_world_rankings
+runtime: python
+description: Infrastructure for ISSF world rankings scraper and api
