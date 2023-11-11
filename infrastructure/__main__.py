@@ -13,28 +13,15 @@ ssh_key = os.getenv("SSH_KEY")
 trusted_ip = os.getenv("TRUSTED_IP")
 
 # Create a DigitalOcean resource (Domain)
-domain = do.Domain("issf_world_rankings_domain", name=domain_name)
+domain = do.Domain("issf-world-rankings-domain", name=domain_name)
 
 # Create a DigitalOcean resource (Droplet)
 droplet = do.Droplet(
-    "issf_world_rankings",
+    "issf-world-rankings",
     image="ubuntu-20-04-x64",
     region="lon1",
     size="s-1vcpu-1gb",
     user_data=f"""#cloud-config
-    runcmd:
-      # Install Fail2Ban for SSH protection
-      - apt-get update
-      - apt-get install -y fail2ban
-      - systemctl enable fail2ban
-      - systemctl start fail2ban
-      # Install Auditd for system auditing
-      - apt-get install -y auditd
-      # Set up a rule to monitor the auth.log file
-      - echo '-w /var/log/auth.log -p wa -k auth_log' >> /etc/audit/rules.d/auth_log.rules
-      - systemctl restart auditd
-      # Set up a cron job to check for non-ssr user logins
-      - echo '0 0 * * * root ausearch -k auth_log -m USER_LOGIN | grep -v "ssr" > /var/log/non_ssr_logins.log' >> /etc/crontab
     users:
       - name: {new_user}
         sudo: ['ALL=(ALL) NOPASSWD:ALL']
