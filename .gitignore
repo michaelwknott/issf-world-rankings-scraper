@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 # Pulumi
-Pulumi.issf_world_rankings.yaml
+Pulumi.issf-world-rankings.yaml
