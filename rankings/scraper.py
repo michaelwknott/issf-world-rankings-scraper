@@ -1,5 +1,4 @@
 import re
-import time
 from datetime import datetime, date
 
 from bs4 import BeautifulSoup
@@ -94,4 +93,3 @@ if __name__ == "__main__":
     for event_code in ["ARM"]:
         event, soup = get_issf_ranking_html(event_code)
         rankings = parse_issf_ranking_html(event, soup)
-        time.sleep(5)
