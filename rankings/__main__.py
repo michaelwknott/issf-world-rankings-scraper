@@ -1,7 +1,7 @@
 import time
 
-from .scraper.scraper import get_issf_ranking_html, parse_issf_ranking_html, EVENT_CODES
-from .scraper.db import Base, Rankings, Session, engine
+from scraper import get_issf_ranking_html, parse_issf_ranking_html, EVENT_CODES
+from db import Base, Rankings, Session, engine
 
 
 def main():
