@@ -26,6 +26,10 @@ def get_issf_ranking_html(event):
 
     Args:
         event (str): ISSF event code.
+
+    Returns:
+        tuple: Tuple containing event code and BeautifulSoup object containing html
+            content.
     """
     headers = {
         "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
@@ -51,6 +55,9 @@ def parse_issf_ranking_html(event_name, response_object):
     Args:
         event_name (str): ISSF event name.
         response_object (BeautifulSoup): BeautifulSoup object containing html content.
+
+    Returns:
+        list: List of dictionaries containing parsed rankings data.
     """
     soup = response_object
 
