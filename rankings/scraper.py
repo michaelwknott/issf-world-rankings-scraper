@@ -1,3 +1,4 @@
+import logging
 import re
 from datetime import datetime, date
 
@@ -31,6 +32,7 @@ def get_issf_ranking_html(event):
         tuple: Tuple containing event code and BeautifulSoup object containing html
             content.
     """
+    logging.info(f"Requesting html for event: {event}")
     headers = {
         "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
         "origin": "https://www.issf-sports.org",
@@ -44,7 +46,13 @@ def get_issf_ranking_html(event):
         f"?evlinkid={event}"
     )
 
-    response = requests.get(url, headers=headers)
+    try:
+        response = requests.get(url, headers=headers)
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Request response error: {e}")
+        raise SystemExit(e)
+
+    logging.info(f"Request response status code: {response.status_code}")
 
     return event, BeautifulSoup(response.content, "html.parser")
 
@@ -59,13 +67,22 @@ def parse_issf_ranking_html(event_name, response_object):
     Returns:
         list: List of dictionaries containing parsed rankings data.
     """
+    logging.info(f"Parsing html for event: {event_name}")
     soup = response_object
 
     version_text = soup.select_one(".versiontext").text
+    if version_text is None:
+        logging.error("Parsing error: the version_text css selector is None")
+        raise SystemExit(
+            "Exiting scraper due to the version_text css selector returning None"
+        )
     version_date_string = re.sub("[^0-9]", "", version_text)
     version_date = datetime.strptime(version_date_string, "%d%m%Y").date()
 
     html_tables = soup.find_all("table")
+    if html_tables == []:
+        logging.error("Parsing error: table tags not found in html")
+        raise SystemExit("Exiting scraper as table tags were not found in html")
     html_rankings_table = html_tables[0]
     html_rankings_rows = html_rankings_table.find_all("tr")
 
