@@ -1,3 +1,4 @@
+import datetime
 import logging
 import time
 
@@ -5,8 +6,11 @@ from scraper import get_issf_ranking_html, parse_issf_ranking_html, EVENT_CODES
 from db import Base, Rankings, Session, engine
 
 
+now = datetime.datetime.now()
+now_str = now.strftime("%Y-%m-%d_%H-%M-%S")
+
 logging.basicConfig(
-    filename="scraper.log",
+    filename=f"scraper_{now_str}.log",
     level=logging.INFO,
     format="%(asctime)s: %(name)s - %(levelname)s - %(message)s "
     "(Filename: %(filename)s  Line: %(lineno)d  Function: %(funcName)s)",
@@ -28,7 +32,7 @@ def main():
             with session.begin():
                 for ranking in rankings:
                     session.add(Rankings(**ranking))
-                    logging.info(f"Added world rankings for {event_code} to database")
+                logging.info(f"Added world rankings for {event_code} to database")
         time.sleep(0.5)
     logging.info("ISSF World Rankings scraper finished")
 
