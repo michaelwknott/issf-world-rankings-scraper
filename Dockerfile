@@ -10,6 +10,7 @@ WORKDIR /issf_world_rankings
 COPY ./requirements.txt /issf_world_rankings/requirements.txt
 RUN pip3 install --no-cache-dir -r /issf_world_rankings/requirements.txt
 
+COPY .env /issf_world_rankings/.env
 COPY ./rankings /issf_world_rankings/rankings
 
 RUN env > /etc/environment
