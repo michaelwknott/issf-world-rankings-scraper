@@ -35,5 +35,8 @@ jobs:
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_KEY }}
         script: |
+          docker stop issf-world-rankings || true
+          docker rm issf-world-rankings || true
+          docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest || true
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
           docker run -d -e DB_URL=${{ secrets.DB_URL }} ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
