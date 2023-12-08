@@ -1,1 +1,1 @@
-10 11 * * 5 cd /issf_world_rankings/rankings && /usr/local/bin/python __main__.py >> /issf_world_rankings/rankings/cronlogfile.log 2>&1
+15 11 * * 5 cd /issf_world_rankings/rankings && /usr/local/bin/python __main__.py >> /issf_world_rankings/rankings/cronlogfile.log 2>&1
