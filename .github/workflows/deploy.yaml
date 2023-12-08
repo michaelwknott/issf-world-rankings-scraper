@@ -35,10 +35,11 @@ jobs:
         host: ${{ secrets.VPS_IP }}
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_KEY }}
+        env: DB_URL=${secrets.DB_URL}
         script: |
           docker stop issf-world-rankings || true
           docker rm issf-world-rankings || true
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest || true
           docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
-          docker run -d -e DB_URL=${secrets.DB_URL} --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
+          docker run -d -e DB_URL=$DB_URL --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
