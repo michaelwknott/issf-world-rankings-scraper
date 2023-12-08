@@ -27,8 +27,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
-        secrets: |
-            "DB_URL=${{ secrets.DB_URL }}"
+        
 
     - name: Deploy to VPS
       uses: appleboy/ssh-action@v1.0.0
@@ -42,4 +41,4 @@ jobs:
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest || true
           docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
-          docker run -d --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
+          docker run -d -e DB_URL=${secrets.DB_URL} --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
