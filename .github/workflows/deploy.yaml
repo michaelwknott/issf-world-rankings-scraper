@@ -35,7 +35,7 @@ jobs:
         host: ${{ secrets.VPS_IP }}
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_KEY }}
-        env: DB_URL=${secrets.DB_URL}
+        envs: DB_URL=${secrets.DB_URL}
         script: |
           docker stop issf-world-rankings || true
           docker rm issf-world-rankings || true
