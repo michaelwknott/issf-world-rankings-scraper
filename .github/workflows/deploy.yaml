@@ -45,4 +45,4 @@ jobs:
           docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
           export DB_URL=$DB_URL
-          docker run -d -e $DB_URL --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
+          docker run -d -e DB_URL=$DB_URL --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
