@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -y cron
 
 RUN --mount=type=secret,id=DB_URL \
-  cat /run/secrets/DB_URL
+  export DB_URL=$(cat /run/secrets/DB_URL)
 
 WORKDIR /issf_world_rankings
 
