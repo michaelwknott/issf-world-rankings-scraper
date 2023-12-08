@@ -3,6 +3,8 @@ FROM python:3.11
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+ENV DB_URL=""
+
 RUN apt-get update && apt-get install -y cron
 
 WORKDIR /issf_world_rankings
