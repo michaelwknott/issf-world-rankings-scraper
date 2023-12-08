@@ -7,7 +7,7 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
 load_dotenv()
 
-engine = create_engine(os.getenv("DB_URL"))
+engine = create_engine(os.environ["DB_URL"])
 Session = sessionmaker(bind=engine)
 
 
