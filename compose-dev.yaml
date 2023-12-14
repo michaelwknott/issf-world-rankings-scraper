@@ -1,0 +1,12 @@
+version: '3'
+services:
+  issf-world-rankings:
+    image: michaelwknott/issf-world-rankings:2.0
+    environment:
+      - DB_URL=postgresql://postgres:issfdev@issf-dev-postgres/postgres
+    depends_on:
+      - issf-dev-postgres
+  issf-dev-postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=issfdev
