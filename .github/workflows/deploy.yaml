@@ -41,6 +41,7 @@ jobs:
         script: |
           docker stop issf-world-rankings || true
           docker rm issf-world-rankings || true
+          docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest || true
           docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
           export DB_URL=$DB_URL
