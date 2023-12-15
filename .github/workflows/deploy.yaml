@@ -26,7 +26,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
         
 
     - name: Deploy to VPS
@@ -41,8 +41,8 @@ jobs:
         script: |
           docker stop issf-world-rankings || true
           docker rm issf-world-rankings || true
-          docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest || true
+          docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0 || true
           docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
           export DB_URL=$DB_URL
-          docker run -d -e DB_URL=$DB_URL --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:latest
+          docker run -d -e DB_URL=$DB_URL --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
