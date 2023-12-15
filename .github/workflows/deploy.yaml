@@ -47,10 +47,10 @@ jobs:
         script: |
           docker stop issf-world-rankings
           docker rm issf-world-rankings
-          docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
+          docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
           export DB_URL=$DB_URL
           docker run -d --restart=always --name=issf-world-rankings \
             -e DB_URL=$DB_URL \
-            -v /home/{{ secrets.VPS_USERNAME }}:/issf_world_rankings/rankings/logs \
+            -v /home/${{ secrets.VPS_USERNAME }}:/issf_world_rankings/rankings/logs \
             ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
