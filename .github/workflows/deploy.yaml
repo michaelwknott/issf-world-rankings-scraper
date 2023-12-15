@@ -45,10 +45,8 @@ jobs:
         key: ${{ secrets.VPS_SSH_KEY }}
         envs: DB_URL
         script: |
-          docker stop issf-world-rankings || true
-          docker rm issf-world-rankings || true
-          docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0 || true
+          docker-compose down
           docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
           export DB_URL=$DB_URL
-          docker run -d --restart always -e DB_URL=$DB_URL --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
+          docker-compose up -d

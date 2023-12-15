@@ -1,0 +1,11 @@
+version: '3'
+services:
+  issf-world-rankings:
+    image: ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
+    restart: always
+    environment:
+      - DB_URL=$DB_URL
+    volumes:
+      - logvolume:/issf_world_rankings/rankings/logs
+volumes:
+  logvolume:
