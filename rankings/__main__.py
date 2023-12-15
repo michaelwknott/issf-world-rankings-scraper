@@ -1,5 +1,6 @@
 import datetime
 import logging
+import os
 import time
 
 from scraper import get_issf_ranking_html, parse_issf_ranking_html, EVENT_CODES
@@ -9,8 +10,12 @@ from db import Base, Rankings, Session, engine
 now = datetime.datetime.now()
 now_str = now.strftime("%Y-%m-%d_%H-%M-%S")
 
+
+if not os.path.exists("logs"):
+    os.makedirs("logs")
+
 logging.basicConfig(
-    filename=f"scraper_{now_str}.log",
+    filename=f"logs/scraper_{now_str}.log",
     level=logging.INFO,
     format="%(asctime)s: %(name)s - %(levelname)s - %(message)s "
     "(Filename: %(filename)s  Line: %(lineno)d  Function: %(funcName)s)",
