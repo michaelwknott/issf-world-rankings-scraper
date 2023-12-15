@@ -36,12 +36,12 @@ jobs:
         done       
 
     - name: Copy Docker Compose file to VPS
-      uses: appleboy/scp-action@v0.1.1
+      uses: appleboy/scp-action@v0.1.4
       with:
         host: ${{ secrets.VPS_IP }}
         username: ${{ secrets.VPS_USERNAME }}
         key: ${{ secrets.VPS_SSH_KEY }}
-        source: "./compose_prod.yaml"
+        source: "./compose-prod.yaml"
         target: "/home/${{ secrets.VPS_USERNAME }}"
 
     - name: Deploy to VPS
