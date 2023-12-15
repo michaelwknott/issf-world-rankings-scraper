@@ -27,7 +27,13 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
-        
+
+    - name: Wait for Docker image to be available
+      run: |
+        until docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0; do
+          echo "Waiting for Docker image to be available..."
+          sleep 10
+        done       
 
     - name: Deploy to VPS
       uses: appleboy/ssh-action@v1.0.0
