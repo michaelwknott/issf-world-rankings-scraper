@@ -35,15 +35,6 @@ jobs:
           sleep 10
         done       
 
-    - name: Copy Docker Compose file to VPS
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.VPS_IP }}
-        username: ${{ secrets.VPS_USERNAME }}
-        key: ${{ secrets.VPS_SSH_KEY }}
-        source: "./compose-prod.yaml"
-        target: "/home/${{ secrets.VPS_USERNAME }}"
-
     - name: Deploy to VPS
       uses: appleboy/ssh-action@v1.0.0
       env:
@@ -54,8 +45,12 @@ jobs:
         key: ${{ secrets.VPS_SSH_KEY }}
         envs: DB_URL
         script: |
-          docker compose down
+          docker stop issf-world-rankings
+          docker rm issf-world-rankings
           docker image prune -a --filter="reference=${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings" --force
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
           export DB_URL=$DB_URL
-          docker run -d --restart always -e DB_URL=$DB_URL --name issf-world-rankings ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
+          docker run -d --restart=always --name=issf-world-rankings \
+            -e DB_URL=$DB_URL \
+            -v /home/{{ secrets.VPS_USERNAME }}:/issf_world_rankings/rankings/logs \
+            ${{ secrets.DOCKERHUB_USERNAME }}/issf-world-rankings:2.0
