@@ -43,19 +43,19 @@ The goal of this project is to make ISSF World Rankings data more accessible and
 1. Ensure `.env` file is created in the root directory of the project (see Notes above)
 1. Run the application
    ```sh
-   docker-compose -f compose-dev.yaml up -d
+   docker-compose up -d
    ```
-1. Using `docker-compose -f compose-dev.yaml up -d` will run the web scraper on the schedule set in the `entrypoint.sh` file. To run the web scraper manually, run the following command:
+1. Using `docker-compose up -d` will run the web scraper on the schedule set in the `entrypoint.sh` file. To run the web scraper manually, run the following command:
    ```sh
-   docker-compose -f compose-dev.yaml exec issf-world-rankings python rankings/__main__.py
+   docker-compose exec issf-world-rankings python rankings/__main__.py
    ```
 1. Check the logs to ensure the scraper has run successfully. Update the date and time in the command below to match the date and time of the log file you want to view.
    ```sh
-   docker-compose -f compose-dev.yaml exec issf-world-rankings bash -c "cat logs/scraper_yyyy-mm-dd_hh-mm-ss.log"
+   docker-compose exec issf-world-rankings bash -c "cat logs/scraper_yyyy-mm-dd_hh-mm-ss.log"
    ```
 1. To access the PostgreSQL database, use the following command:
    ```sh
-   docker-compose -f compose-dev.yaml exec issf-dev-postgres psql -U postgres -d postgres
+   docker-compose exec issf-dev-postgres psql -U postgres -d postgres
    ```
 1. SQL queries can be run against the database using the PostgreSQL command line interface. For example, to view the number of rows in the `rankings` table, use the following command:
    ```sh
@@ -63,19 +63,19 @@ The goal of this project is to make ISSF World Rankings data more accessible and
    ```
 1. To stop the application, use the following command:
    ```sh
-   docker-compose -f compose-dev.yaml down
+   docker-compose down
    ```
 
 ### Useful Docker Commands
 1. To view the Docker images, use the following command:
    ```sh
-   docker-compose -f compose-dev.yaml images
+   docker-compose images
    ```
 1. To view the Docker containers currently running, use the following command:
    ```sh
-   docker-compose -f compose-dev.yaml ps
+   docker-compose ps
    ```
 1. If you need to access the web scraper in the Docker container, run the following command:
    ```sh
-   docker -f compose-dev.yaml exec issf-world-rankings bash
+   docker-compose exec issf-world-rankings bash
    ```
