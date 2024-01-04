@@ -35,6 +35,10 @@ def main():
         event, soup = get_issf_ranking_html(event_code)
         rankings = parse_issf_ranking_html(event, soup)
 
+        if not rankings:
+            logging.info(f"No data available for event code: {event_code}")
+            continue
+
         with Session() as session:
             with session.begin():
                 for ranking in rankings:
