@@ -1,96 +1,81 @@
-# python-project-template
-A starter repo for a Python app.
-
-## Demo
-Include a demo gif or screenshot in this section to highlight your project in action.
+# issf-world-rankings-scraper
+This project is a Python application that scrapes the ISSF World Rankings data.
 
 ## About the Project
-Include a description of your project here.
+This project, `issf-world-rankings-scraper`, is a Python application designed to scrape the International Shooting Sport Federation (ISSF) World Rankings data. The data is collected from the official [ISSF website](https://www.issf-sports.org/competitions/worldranking/complete_ranking_by_event_yearly.ashx) and stored in a PostgreSQL database for further analysis and usage.
 
-## Built With
-List the frameworks/libraries your project uses here.
+The application is built with Python using libraries such as BeautifulSoup for web scraping, Requests for handling HTTP requests, SQLAlchemy as the SQL toolkit and ORM, and Psycopg2 as the PostgreSQL database adapter. The application is containerized using Docker for easy setup and distribution. GitHub Actions is used to automate deployment.
 
-## Getting Started
+The goal of this project is to make ISSF World Rankings data more accessible and usable for data analysis, thereby providing valuable insights into an athletes performance progression.
+
+## Running the Application Locally
 
 ### Prerequisites
-List the things a developer must install before running your project here.
+* [Docker](https://www.docker.com/)
+* [Docker Compose](https://docs.docker.com/compose/)
+* [Python](https://www.python.org/)
 
-### Installation
+### Notes
+* The web scraper is designed to run on a remote server with a PostgreSQL database. To run the application locally using Docker-Compose, you will need to create a `.env` file in the root directory of the project and add the following environment variables:
+  * `DB_URL=postgresql://<username>:<password>@<host>:<port>/<database>`
+  * `POSTGRES_PASSWORD=<password>`
+* The web scraper is configured to run on a schedule using Cron. The schedule is set to run every Sunday at 17:21 UTC. To update the schedule, edit the cron schedule (`17 21 * * 7`) in the `entrypoint.sh` file: 
+  * `echo "17 21 * * 7 export DB_URL=$DB_URL_VALUE; cd /issf_world_rankings/rankings && /usr/local/bin/python __main__.py >> /issf_world_rankings/rankings/cronlogfile.log 2>&1" | crontab -`
+  * For more information on how to configure the cron schedule, see [Crontab Guru](https://crontab.guru/)
 
-1. Clone the repo
-    ```
-    git clone git@github.com:michaelwknott/python-project-template.git
-    ```
-
-2. Create a virtual environment
+### Installation to Local Machine
+1. Clone the repository
+   ```sh
+   git clone git@github.com:michaelwknott/issf-world-rankings-scraper.git
    ```
-   python -m venv .venv --prompt .
-   ```
-
-3. Activate your virtual environment
-   ```
-   .venv/bin/activate
-   ```
-
-4. Install requirements
-   ```
-   python -m pip install requirements.txt
-   ```
-
-## Usage
-Include any relevant instructions on using your project here.
-
-## Contributing
-
-1. Fork the Project. See the following [instructions](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) for more information
-
-1. Create a local clone of your fork. Ensure you change the repo address between the angle brackets to your fork's address
-```
-git clone <git@github.com:michaelwknott/python-project-template.git>
-```
-
 1. Create a virtual environment
-   ```
+   ```sh
    python -m venv .venv --prompt .
    ```
-
-1. Activate your virtual environment
+1. Activate the virtual environment
+   ```sh
+   source .venv/bin/activate
    ```
-    .venv/bin/activate
-    ```
+1. Install the dependencies
+   ```sh
+   python -m pip install -r requirements.txt
+   ```
+1. Ensure `.env` file is created in the root directory of the project (see Notes above)
+1. Run the application
+   ```sh
+   docker-compose -f compose-dev.yaml up -d
+   ```
+1. Using `docker-compose -f compose-dev.yaml up -d` will run the web scraper on the schedule set in the `entrypoint.sh` file. To run the web scraper manually, run the following command:
+   ```sh
+   docker-compose -f compose-dev.yaml exec issf-world-rankings python rankings/__main__.py
+   ```
+1. Check the logs to ensure the scraper has run successfully. Update the date and time in the command below to match the date and time of the log file you want to view.
+   ```sh
+   docker-compose -f compose-dev.yaml exec issf-world-rankings bash -c "cat logs/scraper_yyyy-mm-dd_hh-mm-ss.log"
+   ```
+1. To access the PostgreSQL database, use the following command:
+   ```sh
+   docker-compose -f compose-dev.yaml exec issf-dev-postgres psql -U postgres -d postgres
+   ```
+1. SQL queries can be run against the database using the PostgreSQL command line interface. For example, to view the number of rows in the `rankings` table, use the following command:
+   ```sh
+   SELECT COUNT(*) FROM rankings;
+   ```
+1. To stop the application, use the following command:
+   ```sh
+   docker-compose -f compose-dev.yaml down
+   ```
 
-1. Install project requirements and development requirements
-```
-python -m pip install -r requirements.txt -r requirements-dev.txt
-```
-
-1. Install pre-commit hooks
-```
-pre-commit install
-```
-
-1. Create `.git_commit_msg.txt` to use as your commit message template. A template can be found [here](https://gist.github.com/michaelwknott/67ca1a2bbd815749f5fba7a983cd2b9c) or see the following [instructions](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) for m
-ore information 
-
-1. Add `.git_commit_msg.txt` to use as your commit message template
-```
-git config commit.template .git_commit_msg.txt
-```
-
-1. Create a feature branch
-```
-git checkout -b <feature-branch>
-```
-
-1. Make your changes and commit them
-```
-git add .
-git commit
-```
-
-1. Push your changes to your fork
-```
-git push origin <feature-branch>
-```
-
-1. Create a pull request. See the following [instructions](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request) for more information
+### Useful Docker Commands
+1. To view the Docker images, use the following command:
+   ```sh
+   docker-compose -f compose-dev.yaml images
+   ```
+1. To view the Docker containers currently running, use the following command:
+   ```sh
+   docker-compose -f compose-dev.yaml ps
+   ```
+1. If you need to access the web scraper in the Docker container, run the following command:
+   ```sh
+   docker -f compose-dev.yaml exec issf-world-rankings bash
+   ```
