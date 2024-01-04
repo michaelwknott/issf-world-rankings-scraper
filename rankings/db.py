@@ -7,7 +7,11 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
 load_dotenv()
 
-engine = create_engine(os.environ["DB_URL"])
+engine = create_engine(
+    os.environ["DB_URL"],
+    logging_name="sqlalchemy engine",
+    pool_logging_name="sqlalchemy pool",
+)
 Session = sessionmaker(bind=engine)
 
 

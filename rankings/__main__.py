@@ -8,7 +8,7 @@ from db import Base, Rankings, Session, engine
 
 
 now = datetime.datetime.now()
-now_str = now.strftime("%Y-%m-%d_%H-%M-%S")
+now_str = now.strftime("%Y-%m-%d")
 
 
 if not os.path.exists("logs"):
@@ -21,6 +21,8 @@ logging.basicConfig(
     "(Filename: %(filename)s  Line: %(lineno)d  Function: %(funcName)s)",
     datefmt="%m/%d/%Y %I:%M:%S %p",
 )
+logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+logging.getLogger("sqlalchemy.pool").setLevel(logging.INFO)
 
 
 def main():
