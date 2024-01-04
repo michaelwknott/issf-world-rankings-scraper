@@ -4,7 +4,7 @@ This project is a Python application that scrapes the ISSF World Rankings data.
 ## About the Project
 This project, `issf-world-rankings-scraper`, is a Python application designed to scrape the International Shooting Sport Federation (ISSF) World Rankings data. The data is collected from the official [ISSF website](https://www.issf-sports.org/competitions/worldranking/complete_ranking_by_event_yearly.ashx) and stored in a PostgreSQL database for further analysis and usage.
 
-The application is built with Python using libraries such as BeautifulSoup for web scraping, Requests for handling HTTP requests, SQLAlchemy as the SQL toolkit and ORM, and Psycopg2 as the PostgreSQL database adapter. The application is containerized using Docker for easy setup and distribution. GitHub Actions is used to automate deployment.
+The application is built with Python using libraries such as Requests for handling HTTP requests, BeautifulSoup for parsing HTML, SQLAlchemy for managing database interactions, and Psycopg2 as the PostgreSQL database adapter. The application is containerized using Docker for easy setup and distribution. GitHub Actions is used to automate deployment.
 
 The goal of this project is to make ISSF World Rankings data more accessible and usable for data analysis, thereby providing valuable insights into an athletes performance progression.
 
